@@ -1,4 +1,18 @@
+using Artsofte.Database;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+var typeOfContent = typeof(Program);
+builder.Services.AddDbContext<MssqlSqlContext>(options =>
+    options.UseNpgsql
+    (
+        builder.Configuration.GetConnectionString("Connection"),
+        b => b.MigrationsAssembly(typeOfContent.Assembly.GetName().Name)
+    )
+);
 
 builder.Services.AddControllers();
 

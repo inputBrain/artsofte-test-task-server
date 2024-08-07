@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artsofte.Host", "Artsofte.Host\Artsofte.Host.csproj", "{52700D00-44B1-4B1A-9324-69F6A18C324C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artsofte.Database", "Artsofte.Database\Artsofte.Database.csproj", "{AFE04E64-3BBB-4AD3-9FDA-A9DD5912338D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{52700D00-44B1-4B1A-9324-69F6A18C324C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52700D00-44B1-4B1A-9324-69F6A18C324C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52700D00-44B1-4B1A-9324-69F6A18C324C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFE04E64-3BBB-4AD3-9FDA-A9DD5912338D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFE04E64-3BBB-4AD3-9FDA-A9DD5912338D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFE04E64-3BBB-4AD3-9FDA-A9DD5912338D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFE04E64-3BBB-4AD3-9FDA-A9DD5912338D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
