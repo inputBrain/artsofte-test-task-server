@@ -40,4 +40,18 @@ public abstract class AbstractRepository<T> where T : AbstractModel
         DbModel.Update(model);
         return Context.SaveChangesAsync();
     }
+
+
+    protected Task<int> DeleteModelAsync(T model)
+    {
+        DbModel.Remove(model);
+        return Context.SaveChangesAsync();
+    }
+
+
+    public async Task<T?> FindOneAsync(int id)
+    {
+        var model = await DbModel.FindAsync(id);
+        return model;
+    }
 }

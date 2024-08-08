@@ -16,4 +16,28 @@ public class LanguageModel : AbstractModel
     public EmployeeModel Employee { get; set; }
     
     public string Language { get; set; }
+
+
+    public static LanguageModel CreateModel(int employeeId, string language)
+    {
+        return new LanguageModel
+        {
+            EmployeeId = employeeId,
+            Language = language
+        };
+    }
+    
+    
+    public void UpdateModel(LanguageModel model, int employeeId, string language)
+    {
+        model.EmployeeId = employeeId;
+        model.Language = language;
+    }
+
+
+    public static bool IsSameLanguage(LanguageModel model, int employeeId, string language)
+    {
+        return model.EmployeeId == employeeId &&
+               model.Language == language;
+    }
 }

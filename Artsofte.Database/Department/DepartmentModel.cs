@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Artsofte.Database.Employee;
 
 namespace Artsofte.Database.Department;
@@ -32,12 +33,40 @@ public class DepartmentModel : AbstractModel
     }
 
 
-    public void UpdateModel(DepartmentModel model, string name, int floor)
+    public void UpdateModel(DepartmentModel model, string name, int floor, List<EmployeeModel> employees)
     {
         model.Name = name;
         model.Floor = floor;
+        model.Employees = employees;
     }
+
+
+    public static bool IsSameDepartment(DepartmentModel model, string name, int floor,  List<EmployeeModel> employees)
+    {
+        return model.Name == name &&
+               model.Floor == floor &&
+               _isSameEmployees(model, employees);
+               
+    }
+
+
+    private static bool _isSameEmployees(DepartmentModel model, List<EmployeeModel> employees)
+    {
+        if (model.Employees.Count > employees.Count | model.Employees.Count < employees.Count)
+        {
+            return false;
+        }
     
+        foreach (var apiEmployee in employees)
+        {
+            var foundEmployee = model.Employees.FirstOrDefault(x => x.Id == apiEmployee.Id);
     
-    // public static bool IsSameDepartment(DepartmentModel model, int employeeId)
+            if (foundEmployee?.Id != apiEmployee.Id)
+            {
+                return false;
+            }
+        }
+    
+        return true;
+    }
 }
