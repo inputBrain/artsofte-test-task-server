@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Artsofte.Database.Employee;
 
@@ -10,34 +11,28 @@ public class LanguageModel : AbstractModel
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     
-    public int EmployeeId { get; set; }
-    
-    [ForeignKey("EmployeeId")]
-    public EmployeeModel Employee { get; set; }
-    
     public string Language { get; set; }
 
+    public List<EmployeeModel> Employees { get; set; }
 
-    public static LanguageModel CreateModel(int employeeId, string language)
+
+    public static LanguageModel CreateModel(string language)
     {
         return new LanguageModel
         {
-            EmployeeId = employeeId,
             Language = language
         };
     }
     
     
-    public void UpdateModel(LanguageModel model, int employeeId, string language)
+    public void UpdateModel(LanguageModel model, string language)
     {
-        model.EmployeeId = employeeId;
         model.Language = language;
     }
 
 
-    public static bool IsSameLanguage(LanguageModel model, int employeeId, string language)
+    public static bool IsSameLanguage(LanguageModel model, string language)
     {
-        return model.EmployeeId == employeeId &&
-               model.Language == language;
+        return model.Language == language;
     }
 }

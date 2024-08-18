@@ -20,4 +20,8 @@
       <ProjectReference Include="..\Artsofte.Database\Artsofte.Database.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
 </Project>

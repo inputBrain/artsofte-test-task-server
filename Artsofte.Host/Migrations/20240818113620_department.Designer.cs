@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Artsofte.Host.Migrations
 {
     [DbContext(typeof(MssqlSqlContext))]
-    [Migration("20240807044357_language")]
-    partial class language
+    [Migration("20240818113620_department")]
+    partial class department
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,27 +76,6 @@ namespace Artsofte.Host.Migrations
                     b.ToTable("Employee");
                 });
 
-            modelBuilder.Entity("Artsofte.Database.Language.LanguageModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Language")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Language");
-                });
-
             modelBuilder.Entity("Artsofte.Database.Employee.EmployeeModel", b =>
                 {
                     b.HasOne("Artsofte.Database.Department.DepartmentModel", "Department")
@@ -108,25 +87,9 @@ namespace Artsofte.Host.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("Artsofte.Database.Language.LanguageModel", b =>
-                {
-                    b.HasOne("Artsofte.Database.Employee.EmployeeModel", "Employee")
-                        .WithMany("Languages")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("Artsofte.Database.Department.DepartmentModel", b =>
                 {
                     b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("Artsofte.Database.Employee.EmployeeModel", b =>
-                {
-                    b.Navigation("Languages");
                 });
 #pragma warning restore 612, 618
         }

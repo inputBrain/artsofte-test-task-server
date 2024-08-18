@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Artsofte.Host.Migrations
 {
     [DbContext(typeof(MssqlSqlContext))]
-    [Migration("20240807044305_employee")]
+    [Migration("20240817125122_employee")]
     partial class employee
     {
         /// <inheritdoc />

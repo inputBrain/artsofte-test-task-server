@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Artsofte.Database.Language;
 using Microsoft.Extensions.Logging;
 
 namespace Artsofte.Database.Employee;
@@ -10,14 +8,16 @@ public class EmployeeRepository(MssqlSqlContext context, ILoggerFactory loggerFa
 {
     public async Task<EmployeeModel> CreateModel(
         int departmentId,
+        int languageId,
         string name,
         string surname,
         int age,
-        Gender gender,
-        List<LanguageModel> languages
+        Gender gender
     )
     {
-        var model = EmployeeModel.CreateModel(departmentId, name, surname, age, gender, languages);
+        var model = EmployeeModel.CreateModel(
+            // departmentId, languageId,
+            name, surname, age, gender);
 
         var result = await CreateModelAsync(model);
         if (result == null)
@@ -32,20 +32,20 @@ public class EmployeeRepository(MssqlSqlContext context, ILoggerFactory loggerFa
     public async Task UpdateModel(
         EmployeeModel model,
         int departmentId,
+        int languageId,
         string name,
         string surname,
         int age,
-        Gender gender,
-        List<LanguageModel> languages
+        Gender gender
     )
     {
-        if (EmployeeModel.IsSameEmployee(model, departmentId, name, surname, age, gender, languages))
+        if (EmployeeModel.IsSameEmployee(model, departmentId, languageId, name, surname, age, gender))
         {
             Logger.LogWarning("Employee model is the same. Model is not updated");
             return;
         }
 
-        model.UpdateModel(model, departmentId, name, surname, age, gender, languages);
+        model.UpdateModel(model, departmentId, languageId, name, surname, age, gender);
         await UpdateModelAsync(model);
     }
 

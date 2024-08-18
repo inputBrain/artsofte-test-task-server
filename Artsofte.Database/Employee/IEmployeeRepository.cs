@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Artsofte.Database.Language;
+﻿using System.Threading.Tasks;
 
 namespace Artsofte.Database.Employee;
 
 public interface IEmployeeRepository
 {
-    Task<EmployeeModel> CreateModel(int departmentId, string name, string surname, int age, Gender gender, List<LanguageModel> languages);
+    Task<EmployeeModel> CreateModel(int departmentId, int languageId, string name, string surname, int age, Gender gender);
 
-    Task UpdateModel(EmployeeModel model, int departmentId, string name, string surname, int age, Gender gender, List<LanguageModel> languages);
+    Task UpdateModel(EmployeeModel model, int departmentId, int languageId, string name, string surname, int age, Gender gender);
 
     Task DeleteModel(EmployeeModel model);
 

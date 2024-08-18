@@ -32,6 +32,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddResponseCompression();
 
+builder.Services.AddScoped<IDatabaseFacade, DatabaseFacade>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

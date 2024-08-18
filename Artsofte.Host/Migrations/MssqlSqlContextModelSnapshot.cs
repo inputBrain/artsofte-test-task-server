@@ -58,6 +58,9 @@ namespace Artsofte.Host.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
 
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -70,6 +73,8 @@ namespace Artsofte.Host.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("LanguageId");
+
                     b.ToTable("Employee");
                 });
 
@@ -81,15 +86,11 @@ namespace Artsofte.Host.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Language")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Language");
                 });
@@ -102,18 +103,15 @@ namespace Artsofte.Host.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("Artsofte.Database.Language.LanguageModel", b =>
-                {
-                    b.HasOne("Artsofte.Database.Employee.EmployeeModel", "Employee")
-                        .WithMany("Languages")
-                        .HasForeignKey("EmployeeId")
+                    b.HasOne("Artsofte.Database.Language.LanguageModel", "Language")
+                        .WithMany("Employees")
+                        .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employee");
+                    b.Navigation("Department");
+
+                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("Artsofte.Database.Department.DepartmentModel", b =>
@@ -121,9 +119,9 @@ namespace Artsofte.Host.Migrations
                     b.Navigation("Employees");
                 });
 
-            modelBuilder.Entity("Artsofte.Database.Employee.EmployeeModel", b =>
+            modelBuilder.Entity("Artsofte.Database.Language.LanguageModel", b =>
                 {
-                    b.Navigation("Languages");
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

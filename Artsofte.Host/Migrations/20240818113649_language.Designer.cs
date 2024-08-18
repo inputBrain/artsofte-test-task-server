@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Artsofte.Host.Migrations
 {
     [DbContext(typeof(MssqlSqlContext))]
-    [Migration("20240807044335_department")]
-    partial class department
+    [Migration("20240818113649_language")]
+    partial class language
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +61,9 @@ namespace Artsofte.Host.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
 
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -73,7 +76,26 @@ namespace Artsofte.Host.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("LanguageId");
+
                     b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("Artsofte.Database.Language.LanguageModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Language");
                 });
 
             modelBuilder.Entity("Artsofte.Database.Employee.EmployeeModel", b =>
@@ -84,10 +106,23 @@ namespace Artsofte.Host.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Artsofte.Database.Language.LanguageModel", "Language")
+                        .WithMany("Employees")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Department");
+
+                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("Artsofte.Database.Department.DepartmentModel", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("Artsofte.Database.Language.LanguageModel", b =>
                 {
                     b.Navigation("Employees");
                 });

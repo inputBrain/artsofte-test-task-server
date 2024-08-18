@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using Artsofte.Database.Department;
 using Artsofte.Database.Language;
 
@@ -19,6 +17,13 @@ public class EmployeeModel : AbstractModel
     [Required]
     [ForeignKey("DepartmentId")]
     public DepartmentModel Department { get; set; }
+    
+    [Required]
+    public int LanguageId { get; set; }
+    
+    [Required]
+    [ForeignKey("LanguageId")]
+    public LanguageModel Language { get; set; }
 
     [Required]
     public string Name { get; set; }
@@ -32,28 +37,25 @@ public class EmployeeModel : AbstractModel
 
     [Required]
     public Gender Gender { get; set; }
-    
-    [Required]
-    public List<LanguageModel> Languages { get; set; }
 
     
     public static EmployeeModel CreateModel(
-        int departmentId,
+        // int departmentId,
+        // int languageId,
         string name,
         string surname,
         int age,
-        Gender gender,
-        List<LanguageModel> languages
+        Gender gender
     )
     {
         return new EmployeeModel
         {
-            DepartmentId = departmentId,
+            // DepartmentId = departmentId,
+            // LanguageId = languageId,
             Name = name,
             Surname = surname,
             Age = age,
-            Gender = gender,
-            Languages = languages
+            Gender = gender
         };
     }
     
@@ -61,58 +63,39 @@ public class EmployeeModel : AbstractModel
     public void UpdateModel(
         EmployeeModel model,
         int departmentId,
+        int languageId,
         string name,
         string surname,
         int age,
-        Gender gender,
-        List<LanguageModel> languages
+        Gender gender
     )
     {
-        model.DepartmentId = departmentId;
+        // model.DepartmentId = departmentId;
+        // model.LanguageId = languageId;
         model.Name = name;
         model.Surname = surname;
         model.Age = age;
         model.Gender = gender;
-        model.Languages = languages;
     }
     
     
     public static bool IsSameEmployee(
         EmployeeModel model,
         int departmentId,
+        int languageId,
         string name,
         string surname,
         int age,
-        Gender gender,
-        List<LanguageModel> languages
+        Gender gender
     )
     {
-        return model.DepartmentId == departmentId &&
+        return 
+            
+            // model.DepartmentId == departmentId &&
+            //    model.LanguageId == languageId &&
                model.Name == name &&
                model.Surname == surname &&
                model.Age == age &&
-               model.Gender == gender &&
-               _isSameLanguages(model, languages);
-    }
-    
-    
-    private static bool _isSameLanguages(EmployeeModel model, List<LanguageModel> languages)
-    {
-        if (model.Languages.Count > languages.Count | model.Languages.Count < languages.Count)
-        {
-            return false;
-        }
-    
-        foreach (var apiLanguage in languages)
-        {
-            var foundLanguage = model.Languages.FirstOrDefault(x => x.Language == apiLanguage.Language);
-    
-            if (foundLanguage?.Language != apiLanguage.Language)
-            {
-                return false;
-            }
-        }
-    
-        return true;
+               model.Gender == gender;
     }
 }
