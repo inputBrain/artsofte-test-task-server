@@ -17,6 +17,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Artsofte.Cms.Codec\Artsofte.Cms.Codec.csproj" />
+      <ProjectReference Include="..\Artsofte.Cms\Artsofte.Cms.csproj" />
       <ProjectReference Include="..\Artsofte.Database\Artsofte.Database.csproj" />
     </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Artsofte.Database.Employee;
 
@@ -10,5 +11,7 @@ public interface IEmployeeRepository
 
     Task DeleteModel(EmployeeModel model);
 
-    Task<EmployeeModel?> FindOneById(int id);
+    Task<EmployeeModel> GetOneById(int id);
+    
+    Task<(List<EmployeeModel>, int)> ListAll(int skip, int take);
 }

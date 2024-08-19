@@ -40,8 +40,8 @@ public class EmployeeModel : AbstractModel
 
     
     public static EmployeeModel CreateModel(
-        // int departmentId,
-        // int languageId,
+        int departmentId,
+        int languageId,
         string name,
         string surname,
         int age,
@@ -50,8 +50,8 @@ public class EmployeeModel : AbstractModel
     {
         return new EmployeeModel
         {
-            // DepartmentId = departmentId,
-            // LanguageId = languageId,
+            DepartmentId = departmentId,
+            LanguageId = languageId,
             Name = name,
             Surname = surname,
             Age = age,
@@ -70,8 +70,8 @@ public class EmployeeModel : AbstractModel
         Gender gender
     )
     {
-        // model.DepartmentId = departmentId;
-        // model.LanguageId = languageId;
+        model.DepartmentId = departmentId;
+        model.LanguageId = languageId;
         model.Name = name;
         model.Surname = surname;
         model.Age = age;
@@ -89,10 +89,8 @@ public class EmployeeModel : AbstractModel
         Gender gender
     )
     {
-        return 
-            
-            // model.DepartmentId == departmentId &&
-            //    model.LanguageId == languageId &&
+        return model.DepartmentId == departmentId &&
+               model.LanguageId == languageId &&
                model.Name == name &&
                model.Surname == surname &&
                model.Age == age &&

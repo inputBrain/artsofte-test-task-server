@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Artsofte.Cms\Artsofte.Cms.csproj" />
+      <ProjectReference Include="..\Artsofte.Database\Artsofte.Database.csproj" />
+    </ItemGroup>
+
+</Project>

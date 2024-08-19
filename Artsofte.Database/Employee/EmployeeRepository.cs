@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Artsofte.Database.Employee;
@@ -16,7 +19,7 @@ public class EmployeeRepository(MssqlSqlContext context, ILoggerFactory loggerFa
     )
     {
         var model = EmployeeModel.CreateModel(
-            // departmentId, languageId,
+            departmentId, languageId,
             name, surname, age, gender);
 
         var result = await CreateModelAsync(model);
@@ -56,9 +59,31 @@ public class EmployeeRepository(MssqlSqlContext context, ILoggerFactory loggerFa
     }
 
 
-    public async Task<EmployeeModel?> FindOneById(int id)
+    public async Task<EmployeeModel> GetOneById(int id)
     {
         var model = await FindOneAsync(id);
+
+        if (model == null)
+        {
+            throw new Exception("Employee model is not found");
+        }
+        
         return model;
+    }
+
+
+    public async Task<(List<EmployeeModel>, int)> ListAll(int skip, int take)
+    {
+        var totalCount = await DbModel.CountAsync();
+
+        var collection = await DbModel
+            .OrderBy(x => x.Id)
+            .Include(x => x.Language)
+            .Include(x => x.Department)
+            .Skip(skip * take)
+            .Take(take)
+            .ToListAsync();
+
+        return (collection, totalCount);
     }
 }

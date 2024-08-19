@@ -4,25 +4,20 @@
     @Surname NVARCHAR(255),
     @Age INT,
     @Gender INT,
-    @Languages NVARCHAR(MAX)
+    @LanguageId INT
 AS
 BEGIN
     IF NOT EXISTS (SELECT * FROM Department WHERE Id = @DepartmentId)
         BEGIN
             RAISERROR('Invalid department', 16, 1);
-            RETURN;
         END
 
     BEGIN TRANSACTION;
 
-    INSERT INTO Employee (DepartmentId, Name, Surname, Age, Gender)
-    VALUES (@DepartmentId, @Name, @Surname, @Age, @Gender);
+    INSERT INTO Employee (DepartmentId, Name, Surname, Age, Gender, LanguageId)
+    VALUES (@DepartmentId, @Name, @Surname, @Age, @Gender, @LanguageId);
 
     DECLARE @EmployeeId INT = SCOPE_IDENTITY();
-
-    INSERT INTO Language (EmployeeId, Language)
-    SELECT @EmployeeId, value
-    FROM STRING_SPLIT(@Languages, ',');
 
     COMMIT TRANSACTION;
 END
