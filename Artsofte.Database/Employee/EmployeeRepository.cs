@@ -38,17 +38,16 @@ public class EmployeeRepository(MssqlSqlContext context, ILoggerFactory loggerFa
         int languageId,
         string name,
         string surname,
-        int age,
-        Gender gender
+        int age
     )
     {
-        if (EmployeeModel.IsSameEmployee(model, departmentId, languageId, name, surname, age, gender))
+        if (EmployeeModel.IsSameEmployee(model, departmentId, languageId, name, surname, age))
         {
             Logger.LogWarning("Employee model is the same. Model is not updated");
             return;
         }
 
-        model.UpdateModel(model, departmentId, languageId, name, surname, age, gender);
+        model.UpdateModel(model, departmentId, languageId, name, surname, age);
         await UpdateModelAsync(model);
     }
 
@@ -61,7 +60,10 @@ public class EmployeeRepository(MssqlSqlContext context, ILoggerFactory loggerFa
 
     public async Task<EmployeeModel> GetOneById(int id)
     {
-        var model = await FindOneAsync(id);
+        var model = await DbModel
+            .Include(x => x.Department)
+            .Include(x => x.Language)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         if (model == null)
         {

@@ -23,9 +23,6 @@ public sealed class UpdateEmployee
 
     [Required]
     public int Age { get; set; }
-
-    [Required]
-    public GenderPayload GenderPayload { get; set; }
     
     
     public sealed class UpdateEmployeeResponse : AbstractResponse

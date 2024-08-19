@@ -66,8 +66,7 @@ public class EmployeeModel : AbstractModel
         int languageId,
         string name,
         string surname,
-        int age,
-        Gender gender
+        int age
     )
     {
         model.DepartmentId = departmentId;
@@ -75,7 +74,6 @@ public class EmployeeModel : AbstractModel
         model.Name = name;
         model.Surname = surname;
         model.Age = age;
-        model.Gender = gender;
     }
     
     
@@ -85,15 +83,13 @@ public class EmployeeModel : AbstractModel
         int languageId,
         string name,
         string surname,
-        int age,
-        Gender gender
+        int age
     )
     {
         return model.DepartmentId == departmentId &&
                model.LanguageId == languageId &&
                model.Name == name &&
                model.Surname == surname &&
-               model.Age == age &&
-               model.Gender == gender;
+               model.Age == age;
     }
 }
