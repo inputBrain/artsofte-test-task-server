@@ -36,7 +36,7 @@ public class EmployeeController : AbstractController<EmployeeController>
             request.Name,
             request.Surname,
             request.Age,
-            (Gender) request.GenderPayload
+            (Gender) request.Gender
         );
         
         

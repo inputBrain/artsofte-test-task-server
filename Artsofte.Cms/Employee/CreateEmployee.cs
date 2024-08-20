@@ -22,7 +22,7 @@ public sealed class CreateEmployee
     public int Age { get; set; }
 
     [Required]
-    public GenderPayload GenderPayload { get; set; }
+    public int Gender { get; set; }
     
     
     public sealed class CreateEmployeeResponse : AbstractResponse

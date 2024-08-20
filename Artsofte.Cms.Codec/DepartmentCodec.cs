@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Artsofte.Cms.Payload.Department;
+﻿using Artsofte.Cms.Payload.Department;
 using Artsofte.Database.Department;
 
 namespace Artsofte.Cms.Codec;
@@ -13,7 +12,7 @@ public static class DepartmentCodec
             Id = dbModel.Id,
             Name = dbModel.Name,
             Floor = dbModel.Floor,
-            EmployeePayloads = dbModel.Employees.Select(EmployeeCodec.EncodeEmployee).ToList()
+            // EmployeePayloads = dbModel.Employees.Select(EmployeeCodec.EncodeEmployee).ToList()
         };
     }
 }

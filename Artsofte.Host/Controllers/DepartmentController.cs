@@ -14,7 +14,7 @@ public class DepartmentController : AbstractController<DepartmentController>
     
     [HttpPost]
     [ProducesResponseType(typeof(GetAllDepartment.GetAllDepartmentResponse), 200)]
-    public async Task<GetAllDepartment.GetAllDepartmentResponse> ListAllDepartment()
+    public async Task<GetAllDepartment.GetAllDepartmentResponse> ListAllDepartment([FromBody] GetAllDepartment request)
     {
         var collection = await Db.DepartmentRepository.ListAll();
 

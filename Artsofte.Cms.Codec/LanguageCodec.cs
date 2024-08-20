@@ -12,7 +12,7 @@ public static class LanguageCodec
         {
             Id = dbModel.Id,
             Language = dbModel.Language,
-            EmployeePayloads = dbModel.Employees.Select(EmployeeCodec.EncodeEmployee).ToList()
+            // EmployeePayloads = dbModel.Employees.Select(EmployeeCodec.EncodeEmployee).ToList()
         };
     }
 }

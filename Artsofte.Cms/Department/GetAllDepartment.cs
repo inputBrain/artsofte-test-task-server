@@ -7,12 +7,12 @@ public sealed class GetAllDepartment
 {
     public sealed class GetAllDepartmentResponse : AbstractResponse
     {
-        public List<DepartmentPayload> DepartmentPayloads { get; set; }
+        public List<DepartmentPayload> Departments { get; set; }
 
 
-        public GetAllDepartmentResponse(List<DepartmentPayload> departmentPayloads)
+        public GetAllDepartmentResponse(List<DepartmentPayload> departments)
         {
-            DepartmentPayloads = departmentPayloads;
+            Departments = departments;
         }
     }
 }

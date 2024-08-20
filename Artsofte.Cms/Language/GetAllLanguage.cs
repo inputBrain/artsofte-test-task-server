@@ -7,12 +7,12 @@ public sealed class GetAllLanguage
 {
     public sealed class GetAllLanguageResponse
     {
-        public List<LanguagePayload> LanguagePayloads { get; set; }
+        public List<LanguagePayload> Languages { get; set; }
 
 
-        public GetAllLanguageResponse(List<LanguagePayload> languagePayloads)
+        public GetAllLanguageResponse(List<LanguagePayload> languages)
         {
-            LanguagePayloads = languagePayloads;
+            Languages = languages;
         }
     }
 }

@@ -14,7 +14,7 @@ public class LanguageController : AbstractController<LanguageController>
     
     [HttpPost]
     [ProducesResponseType(typeof(GetAllLanguage.GetAllLanguageResponse), 200)]
-    public async Task<GetAllLanguage.GetAllLanguageResponse> ListAllLanguage()
+    public async Task<GetAllLanguage.GetAllLanguageResponse> ListAllLanguage([FromBody] GetAllLanguage reqest)
     {
         var collection = await Db.LanguageRepository.ListAll();
 
