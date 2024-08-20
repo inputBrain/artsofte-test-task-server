@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,13 @@ public class DepartmentRepository(MssqlSqlContext context, ILoggerFactory logger
     }
 
 
-    public async Task<ImmutableArray<string>> ListAllNames()
+    public async Task<List<DepartmentModel>> ListAll()
+    {
+        return await DbModel.Include(x => x.Employees).ToListAsync();
+    }
+
+
+    public async Task<ImmutableArray<string>> ListAllOnlyNames()
     {
         var collection = await DbModel.Select(x => x.Name).ToListAsync();
 

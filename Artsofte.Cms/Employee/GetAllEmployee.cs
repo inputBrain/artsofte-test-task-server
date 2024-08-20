@@ -3,7 +3,7 @@ using Artsofte.Cms.Payload.Employee;
 
 namespace Artsofte.Cms.Employee;
 
-public sealed class GetAllEmployees
+public sealed class GetAllEmployee
 {
     public int Skip { get; set; }
     

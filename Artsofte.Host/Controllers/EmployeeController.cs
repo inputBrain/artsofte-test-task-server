@@ -25,7 +25,7 @@ public class EmployeeController : AbstractController<EmployeeController>
     
     [HttpPost]
     [ProducesResponseType(typeof(CreateEmployee.CreateEmployeeResponse), 200)]
-    public async Task<GetAllEmployees.GetAllEmployeesResponse> CreateEmployee([FromBody] CreateEmployee request)
+    public async Task<GetAllEmployee.GetAllEmployeesResponse> CreateEmployee([FromBody] CreateEmployee request)
     {
         var department = await Db.DepartmentRepository.GetOneById(request.DepartmentId);
         var language = await Db.LanguageRepository.GetOneById(request.LanguageId);
@@ -42,13 +42,13 @@ public class EmployeeController : AbstractController<EmployeeController>
         
         var (collection, totalCount) = await Db.EmployeeRepository.ListAll(0, 20);
 
-        return new GetAllEmployees.GetAllEmployeesResponse(collection.Select(EmployeeCodec.EncodeEmployee).ToList(), totalCount);
+        return new GetAllEmployee.GetAllEmployeesResponse(collection.Select(EmployeeCodec.EncodeEmployee).ToList(), totalCount);
     }
     
     
     [HttpPost]
     [ProducesResponseType(typeof(UpdateEmployee.UpdateEmployeeResponse), 200)]
-    public async Task<GetAllEmployees.GetAllEmployeesResponse> UpdateEmployee([FromBody] UpdateEmployee request)
+    public async Task<GetAllEmployee.GetAllEmployeesResponse> UpdateEmployee([FromBody] UpdateEmployee request)
     {
         var model = await Db.EmployeeRepository.GetOneById(request.EmployeeId);
         var department = await Db.DepartmentRepository.GetOneById(request.DepartmentId);
@@ -68,7 +68,7 @@ public class EmployeeController : AbstractController<EmployeeController>
         
         var (collection, totalCount) = await Db.EmployeeRepository.ListAll(0, 20);
 
-        return new GetAllEmployees.GetAllEmployeesResponse(collection.Select(EmployeeCodec.EncodeEmployee).ToList(), totalCount);
+        return new GetAllEmployee.GetAllEmployeesResponse(collection.Select(EmployeeCodec.EncodeEmployee).ToList(), totalCount);
     }
 
 
@@ -84,11 +84,11 @@ public class EmployeeController : AbstractController<EmployeeController>
     
 
     [HttpPost]
-    [ProducesResponseType(typeof(GetAllEmployees.GetAllEmployeesResponse), 200)]
-    public async Task<GetAllEmployees.GetAllEmployeesResponse> ListAllEmployees([FromBody] GetAllEmployees request)
+    [ProducesResponseType(typeof(GetAllEmployee.GetAllEmployeesResponse), 200)]
+    public async Task<GetAllEmployee.GetAllEmployeesResponse> ListAllEmployees([FromBody] GetAllEmployee request)
     {
         var (collection, totalCount) = await Db.EmployeeRepository.ListAll(request.Skip = 0, request.Take = 20);
 
-        return new GetAllEmployees.GetAllEmployeesResponse(collection.Select(EmployeeCodec.EncodeEmployee).ToList(), totalCount);
+        return new GetAllEmployee.GetAllEmployeesResponse(collection.Select(EmployeeCodec.EncodeEmployee).ToList(), totalCount);
     }
 }
