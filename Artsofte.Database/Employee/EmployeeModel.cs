@@ -32,7 +32,6 @@ public class EmployeeModel : AbstractModel
     public string Surname { get; set; }
 
     [Required]
-    [Range(18, 100)]
     public int Age { get; set; }
 
     [Required]

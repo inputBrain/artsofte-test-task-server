@@ -1,24 +1,55 @@
 ﻿CREATE PROCEDURE CreateEmployee
     @DepartmentId INT,
-    @Name NVARCHAR(255),
-    @Surname NVARCHAR(255),
+    @LanguageId INT,
+    @Name NVARCHAR(100),
+    @Surname NVARCHAR(100),
     @Age INT,
-    @Gender INT,
-    @LanguageId INT
+    @Gender INT
 AS
 BEGIN
-    IF NOT EXISTS (SELECT * FROM Department WHERE Id = @DepartmentId)
-        BEGIN
-            RAISERROR('Invalid department', 16, 1);
-        END
+    SET NOCOUNT ON;
 
-    BEGIN TRANSACTION;
+    BEGIN TRY
+        BEGIN TRANSACTION;
 
-    INSERT INTO Employee (DepartmentId, Name, Surname, Age, Gender, LanguageId)
-    VALUES (@DepartmentId, @Name, @Surname, @Age, @Gender, @LanguageId);
+        INSERT INTO Employee (DepartmentId, LanguageId, Name, Surname, Age, Gender)
+        VALUES (@DepartmentId, @LanguageId, @Name, @Surname, @Age, @Gender);
 
-    DECLARE @EmployeeId INT = SCOPE_IDENTITY();
+        DECLARE @NewEmployeeId INT = SCOPE_IDENTITY();
 
-    COMMIT TRANSACTION;
-END
-GO
+        SELECT
+            e.Id,
+            e.DepartmentId,
+            e.LanguageId,
+            e.Name,
+            e.Surname,
+            e.Age,
+            e.Gender,
+            d.Id AS DepartmentId,
+            d.Name AS DepartmentName,
+            l.Id AS LanguageId,
+            l.Name AS LanguageName
+        FROM Employee e
+                 JOIN Department d ON e.DepartmentId = d.Id
+                 JOIN Language l ON e.LanguageId = l.Id
+        WHERE e.Id = @NewEmployeeId;
+
+        COMMIT TRANSACTION;
+        
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;

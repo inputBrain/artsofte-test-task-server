@@ -1,19 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Artsofte.Database.Department;
 
-public class DepartmentRepository(MssqlSqlContext context, ILoggerFactory loggerFactory) : AbstractRepository<DepartmentModel>(context, loggerFactory), IDepartmentRepository
+public class DepartmentRepository(MssqlSqlContext context, ILoggerFactory loggerFactory) : AbstractStoredProcedure<DepartmentModel>(context, loggerFactory), IDepartmentRepository
 {
-    
     public async Task<DepartmentModel> GetOneById(int id)
     {
-        var model = await FindOneAsync(id);
+        var parameters = new[]
+        {
+            new SqlParameter("@Id", SqlDbType.Int) { Value = id }
+        };
+
+        var model = await ExecuteProcedureAsync("GetDepartmentById", parameters);
+        
+        
         if (model == null)
         {
             throw new Exception("Department model is not found");
@@ -25,7 +33,9 @@ public class DepartmentRepository(MssqlSqlContext context, ILoggerFactory logger
 
     public async Task<List<DepartmentModel>> ListAll()
     {
-        return await DbModel.Include(x => x.Employees).ToListAsync();
+        var collection = await ExecuteProcedureListAsync("ListAllEmployee");
+
+        return collection;
     }
 
 

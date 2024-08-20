@@ -1,14 +1,13 @@
-﻿CREATE PROCEDURE GetDepartmentById
-@Id INT
+CREATE PROCEDURE ListAllDepartment
 AS
 BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
         SELECT
-            d.Id,
-            d.Name,
-            d.Floor,
+            d.Id AS DepartmentId,
+            d.Name AS DepartmentName,
+            d.Floor AS DepartmentFloor,
             e.Id AS EmployeeId,
             e.Name AS EmployeeName,
             e.Surname AS EmployeeSurname,
@@ -18,7 +17,7 @@ BEGIN
             e.Gender
         FROM Department d
                  LEFT JOIN Employee e ON d.Id = e.DepartmentId
-        WHERE d.Id = @Id;
+        ORDER BY d.Id, e.Id;
     END TRY
     BEGIN CATCH
         DECLARE @ErrorMessage NVARCHAR(4000);

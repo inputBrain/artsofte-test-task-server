@@ -1,28 +1,32 @@
-﻿CREATE PROCEDURE GetEmployeeById
-@Id INT
+CREATE PROCEDURE ListAllEmployee
+    @Skip INT,
+    @Take INT,
+    @TotalCount INT OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
-        SELECT
-            e.Id,
-            e.DepartmentId,
-            e.LanguageId,
-            e.Name,
-            e.Surname,
-            e.Age,
-            e.Gender,
-            d.Id AS DepartmentId,
-            d.Name AS DepartmentName,
-            l.Id AS LanguageId,
-            l.Name AS LanguageName
+        BEGIN TRANSACTION;
+
+        SELECT @TotalCount = COUNT(*)
+        FROM Employee;
+
+        SELECT e.Id, e.DepartmentId, e.LanguageId, e.Name, e.Surname, e.Age, e.Gender,
+               d.Name AS DepartmentName,
+               l.Name AS LanguageName
         FROM Employee e
                  JOIN Department d ON e.DepartmentId = d.Id
                  JOIN Language l ON e.LanguageId = l.Id
-        WHERE e.Id = @Id;
+        ORDER BY e.Id
+        OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY;
+
+        COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
         DECLARE @ErrorMessage NVARCHAR(4000);
         DECLARE @ErrorSeverity INT;
         DECLARE @ErrorState INT;

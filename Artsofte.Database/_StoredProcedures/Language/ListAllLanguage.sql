@@ -1,14 +1,12 @@
-﻿CREATE PROCEDURE GetDepartmentById
-@Id INT
+CREATE PROCEDURE ListAllLanguage
 AS
 BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
         SELECT
-            d.Id,
-            d.Name,
-            d.Floor,
+            l.Id AS LanguageId,
+            l.Language AS LanguageName,
             e.Id AS EmployeeId,
             e.Name AS EmployeeName,
             e.Surname AS EmployeeSurname,
@@ -16,9 +14,9 @@ BEGIN
             e.LanguageId,
             e.Age,
             e.Gender
-        FROM Department d
-                 LEFT JOIN Employee e ON d.Id = e.DepartmentId
-        WHERE d.Id = @Id;
+        FROM Language l
+                 LEFT JOIN Employee e ON l.Id = e.DepartmentId
+        ORDER BY l.Id, e.Id;
     END TRY
     BEGIN CATCH
         DECLARE @ErrorMessage NVARCHAR(4000);

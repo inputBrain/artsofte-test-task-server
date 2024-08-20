@@ -1,41 +1,46 @@
 ﻿CREATE PROCEDURE UpdateEmployee
     @Id INT,
     @DepartmentId INT,
-    @Name NVARCHAR(255),
-    @Surname NVARCHAR(255),
-    @Age INT,
-    @Gender INT,
-    @Languages NVARCHAR(MAX)
+    @LanguageId INT,
+    @Name NVARCHAR(100),
+    @Surname NVARCHAR(100),
+    @Age INT
 AS
 BEGIN
-    IF NOT EXISTS (SELECT * FROM Employee WHERE Id = @Id)
-        BEGIN
-            RAISERROR('Employee not found', 16, 1);
-            RETURN;
-        END
+    SET NOCOUNT ON;
 
-    IF NOT EXISTS (SELECT * FROM Department WHERE Id = @DepartmentId)
-        BEGIN
-            RAISERROR('Invalid department', 16, 1);
-            RETURN;
-        END
+    BEGIN TRY
+        BEGIN TRANSACTION;
 
-    BEGIN TRANSACTION;
+        UPDATE Employee
+        SET
+            DepartmentId = @DepartmentId,
+            LanguageId = @LanguageId,
+            Name = @Name,
+            Surname = @Surname,
+            Age = @Age
+        WHERE Id = @Id;
 
-    UPDATE Employee
-    SET DepartmentId = @DepartmentId,
-        Name = @Name,
-        Surname = @Surname,
-        Age = @Age,
-        Gender = @Gender
-    WHERE Id = @Id;
+        IF @@ROWCOUNT = 0
+            BEGIN
+                THROW 50000, 'Employee model is not updated', 1;
+            END
 
-    DELETE FROM Language WHERE EmployeeId = @Id;
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
 
-    INSERT INTO Language (EmployeeId, Language)
-    SELECT @Id, value
-    FROM STRING_SPLIT(@Languages, ',');
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
 
-    COMMIT TRANSACTION;
-END
-GO
+        SELECT
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;
