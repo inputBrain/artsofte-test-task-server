@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE GetLanguageById
+﻿CREATE OR ALTER PROCEDURE GetLanguageById
 @Id INT
 AS
 BEGIN
@@ -27,7 +27,7 @@ BEGIN
         SELECT
             @ErrorMessage = ERROR_MESSAGE(),
             @ErrorSeverity = ERROR_SEVERITY(),
-            @ErrorState = ERROR_STATE;
+            @ErrorState = ERROR_STATE();
 
         RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH

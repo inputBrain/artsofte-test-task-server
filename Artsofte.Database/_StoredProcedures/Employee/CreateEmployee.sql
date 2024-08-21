@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE CreateEmployee
+﻿CREATE OR ALTER PROCEDURE CreateEmployee
     @DepartmentId INT,
     @LanguageId INT,
     @Name NVARCHAR(100),

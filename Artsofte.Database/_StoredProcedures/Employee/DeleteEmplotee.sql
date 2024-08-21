@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE DeleteEmployee
+﻿CREATE OR ALTER PROCEDURE DeleteEmployee
 @Id INT
 AS
 BEGIN

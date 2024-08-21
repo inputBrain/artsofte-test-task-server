@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE CreateDatabase
+﻿CREATE OR ALTER PROCEDURE CreateDatabase
 AS
 BEGIN
     DECLARE @SQL NVARCHAR(MAX);
@@ -22,3 +22,5 @@ BEGIN
     EXEC sp_executesql @SQL;
 END
 GO
+
+

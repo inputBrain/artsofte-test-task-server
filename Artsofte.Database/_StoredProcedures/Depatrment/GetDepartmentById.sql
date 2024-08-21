@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE GetDepartmentById
+﻿CREATE OR ALTER PROCEDURE GetDepartmentById
 @Id INT
 AS
 BEGIN
@@ -28,7 +28,7 @@ BEGIN
         SELECT
             @ErrorMessage = ERROR_MESSAGE(),
             @ErrorSeverity = ERROR_SEVERITY(),
-            @ErrorState = ERROR_STATE;
+            @ErrorState = ERROR_STATE();
 
         RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH

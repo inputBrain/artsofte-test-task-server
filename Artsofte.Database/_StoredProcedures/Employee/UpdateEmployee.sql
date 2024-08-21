@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE UpdateEmployee
+﻿CREATE OR ALTER PROCEDURE UpdateEmployee
     @Id INT,
     @DepartmentId INT,
     @LanguageId INT,

@@ -1,4 +1,4 @@
-CREATE PROCEDURE ListAllDepartment
+CREATE OR ALTER PROCEDURE ListAllDepartment
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -27,7 +27,7 @@ BEGIN
         SELECT
             @ErrorMessage = ERROR_MESSAGE(),
             @ErrorSeverity = ERROR_SEVERITY(),
-            @ErrorState = ERROR_STATE;
+            @ErrorState = ERROR_STATE();
 
         RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH

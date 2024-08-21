@@ -1,4 +1,4 @@
-CREATE PROCEDURE ListAllEmployee
+CREATE OR ALTER PROCEDURE ListAllEmployee
     @Skip INT,
     @Take INT,
     @TotalCount INT OUTPUT
