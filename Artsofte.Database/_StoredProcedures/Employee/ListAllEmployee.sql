@@ -14,7 +14,7 @@ BEGIN
 
         SELECT e.Id, e.DepartmentId, e.LanguageId, e.Name, e.Surname, e.Age, e.Gender,
                d.Name AS DepartmentName,
-               l.Name AS LanguageName
+               l.Language AS LanguageName
         FROM Employee e
                  JOIN Department d ON e.DepartmentId = d.Id
                  JOIN Language l ON e.LanguageId = l.Id
