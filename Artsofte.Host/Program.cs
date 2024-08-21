@@ -5,13 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-var typeOfContent = typeof(Program);
 builder.Services.AddDbContext<MssqlSqlContext>(options =>
-    options.UseNpgsql
-    (
-        builder.Configuration.GetConnectionString("Connection"),
-        b => b.MigrationsAssembly(typeOfContent.Assembly.GetName().Name)
-    )
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
 );
 
 builder.Services.AddControllers();
